@@ -1,10 +1,13 @@
-package cz.cvut.fel.pjv;
+package cz.cvut.fel.pjv.pieces;
+
+import cz.cvut.fel.pjv.Coordinates;
+
 //A generic Piece class which is extended by every specific piece class
 public abstract class Piece {
-    private final String owner;
+  private final String color;
 
     Piece(String player) {
-        owner = player;
+    color = player;
     }
 
 
@@ -19,7 +22,7 @@ public abstract class Piece {
         return null;
     }
 
-    public String getOwner() {
-        return owner;
+  public String getColor() {
+    return color;
     }
 }

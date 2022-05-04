@@ -1,6 +1,7 @@
 package cz.cvut.fel.pjv;
 
-import java.nio.charset.CoderResult;
+import cz.cvut.fel.pjv.pieces.Piece;
+
 import java.util.ArrayList;
 
 //A class representing the chessboard

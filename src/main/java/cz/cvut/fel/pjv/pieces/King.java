@@ -1,6 +1,6 @@
-package cz.cvut.fel.pjv;
+package cz.cvut.fel.pjv.pieces;
 
-public class King extends Piece{
+public class King extends Piece {
     public King(String player) {
         super(player);
     }
