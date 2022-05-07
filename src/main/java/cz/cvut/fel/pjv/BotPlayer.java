@@ -2,7 +2,7 @@ package cz.cvut.fel.pjv;
 
 public abstract class BotPlayer {
 
-  BotPlayer(String pieceColor) {
+  BotPlayer(Color pieceColor) {
   }
 
   public abstract Coordinates pickAMove(Coordinates[][] options);

@@ -5,7 +5,7 @@ import cz.cvut.fel.pjv.pieces.Piece;
 import java.util.ArrayList;
 
 //A class representing the chessboard
-//
+
 public class Board {
     Piece[][] chessboard = new Piece[8][8];
     ArrayList<Coordinates> whitePiecesPositions;

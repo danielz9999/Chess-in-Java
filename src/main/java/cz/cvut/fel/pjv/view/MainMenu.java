@@ -3,7 +3,7 @@ package cz.cvut.fel.pjv.view;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
-
+//Class implementing the gui menu that shows up when launching the application
 public class MainMenu {
   private int whiteTime = -1;
   private int blackTime = -1;
