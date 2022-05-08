@@ -1,7 +1,7 @@
 package cz.cvut.fel.pjv;
 
 public class RandomBotPlayer extends BotPlayer{
-    public RandomBotPlayer(Color pieceColor) {
+    public RandomBotPlayer(PlayerColor pieceColor) {
         super(pieceColor);
     }
 

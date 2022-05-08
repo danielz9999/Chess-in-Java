@@ -1,10 +1,10 @@
 package cz.cvut.fel.pjv.pieces;
 
-import cz.cvut.fel.pjv.Color;
+import cz.cvut.fel.pjv.PlayerColor;
 import cz.cvut.fel.pjv.PieceTypes;
 
 public class Bishop extends Piece {
-  public Bishop(Color player) {
+  public Bishop(PlayerColor player) {
     super(player);
   }
 

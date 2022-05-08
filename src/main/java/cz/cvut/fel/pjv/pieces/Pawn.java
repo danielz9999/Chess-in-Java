@@ -1,11 +1,11 @@
 package cz.cvut.fel.pjv.pieces;
 
-import cz.cvut.fel.pjv.Color;
+import cz.cvut.fel.pjv.PlayerColor;
 import cz.cvut.fel.pjv.PieceTypes;
 
 public class Pawn extends Piece {
 
-  public Pawn(Color player) {
+  public Pawn(PlayerColor player) {
         super(player);
     }
 

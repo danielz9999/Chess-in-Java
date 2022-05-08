@@ -1,10 +1,10 @@
 package cz.cvut.fel.pjv.pieces;
 
-import cz.cvut.fel.pjv.Color;
+import cz.cvut.fel.pjv.PlayerColor;
 import cz.cvut.fel.pjv.PieceTypes;
 
 public class Queen extends Piece {
-  public Queen(Color player) {
+  public Queen(PlayerColor player) {
         super(player);
     }
 

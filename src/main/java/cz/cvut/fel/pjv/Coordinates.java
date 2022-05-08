@@ -5,7 +5,7 @@ package cz.cvut.fel.pjv;
 public class Coordinates {
     private Integer x;
     private Integer y;
-    Coordinates(int a, int b) {
+    public Coordinates(int a, int b) {
         x = a;
         y = b;
     }

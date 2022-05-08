@@ -31,26 +31,32 @@ public class BoardState {
     //The board setup for a standard game of chess
     void standardSetup() {
         for (int i = 0; i < 8; i++) {
-            board[1][i] = new Pawn(Color.BLACK);
-            board[6][i] = new Pawn(Color.WHITE);
+            board[1][i] = new Pawn(PlayerColor.BLACK);
+            board[6][i] = new Pawn(PlayerColor.WHITE);
         }
-        board[0][0] = new Rook(Color.BLACK);
-        board[0][1] = new Knight(Color.BLACK);
-        board[0][2] = new Bishop(Color.BLACK);
-        board[0][3] = new Queen(Color.BLACK);
-        board[0][4] = new King(Color.BLACK);
-        board[0][5] = new Bishop(Color.BLACK);
-        board[0][6] = new Knight(Color.BLACK);
-        board[0][7] = new Rook(Color.BLACK);
+        board[0][0] = new Rook(PlayerColor.BLACK);
+        board[0][1] = new Knight(PlayerColor.BLACK);
+        board[0][2] = new Bishop(PlayerColor.BLACK);
+        board[0][3] = new Queen(PlayerColor.BLACK);
+        board[0][4] = new King(PlayerColor.BLACK);
+        board[0][5] = new Bishop(PlayerColor.BLACK);
+        board[0][6] = new Knight(PlayerColor.BLACK);
+        board[0][7] = new Rook(PlayerColor.BLACK);
 
-        board[7][0] = new Rook(Color.WHITE);
-        board[7][1] = new Knight(Color.WHITE);
-        board[7][2] = new Bishop(Color.WHITE);
-        board[7][3] = new Queen(Color.WHITE);
-        board[7][4] = new King(Color.WHITE);
-        board[7][5] = new Bishop(Color.WHITE);
-        board[7][6] = new Knight(Color.WHITE);
-        board[7][7] = new Rook(Color.WHITE);
+        board[7][0] = new Rook(PlayerColor.WHITE);
+        board[7][1] = new Knight(PlayerColor.WHITE);
+        board[7][2] = new Bishop(PlayerColor.WHITE);
+        board[7][3] = new Queen(PlayerColor.WHITE);
+        board[7][4] = new King(PlayerColor.WHITE);
+        board[7][5] = new Bishop(PlayerColor.WHITE);
+        board[7][6] = new Knight(PlayerColor.WHITE);
+        board[7][7] = new Rook(PlayerColor.WHITE);
+
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 8; j++) {
+                board[i+2][j] = new NullPiece();
+            }
+        }
     }
 
     public boolean isCanWhiteCastle() {
@@ -72,21 +78,8 @@ public class BoardState {
     public Piece[][] getBoard() {
         return board;
     }
-    /*
-    public void setPiece(Coordinates coords, PieceTypes type, Color color) {
-        switch(type) {
-            case KING -> board[coords.getX()][coords.getY()] = new King(color);
-            case QUEEN -> board[coords.getX()][coords.getY()] = new Queen(color);
-            case PAWN -> board[coords.getX()][coords.getY()] = new Pawn(color);
-            case BISHOP -> board[coords.getX()][coords.getY()] = new Bishop(color);
-            case ROOK -> board[coords.getX()][coords.getY()] = new Rook(color);
-            case KNIGHT -> board[coords.getX()][coords.getY()] = new Knight(color);
-            case NONE -> board[coords.getX()][coords.getY()] = new NullPiece();
-        }
-    }
-"
-"     */
-    public void setPiece(Coordinates coords, PieceTypes type, Color color) {
+
+    public void setPiece(Coordinates coords, PieceTypes type, PlayerColor color) {
         Piece temp;
         temp = switch(type) {
             case KING -> new King(color);

@@ -1,14 +1,14 @@
 package cz.cvut.fel.pjv.pieces;
 
-import cz.cvut.fel.pjv.Color;
+import cz.cvut.fel.pjv.PlayerColor;
 import cz.cvut.fel.pjv.Coordinates;
 import cz.cvut.fel.pjv.PieceTypes;
 
 //A generic Piece class which is extended by every specific piece class
 public abstract class Piece {
-  private final Color color;
+  private final PlayerColor color;
 
-  Piece(Color player) {
+  Piece(PlayerColor player) {
     color = player;
     }
 
@@ -24,7 +24,7 @@ public abstract class Piece {
         return null;
     }
 
-  public Color getColor() {
+  public PlayerColor getColor() {
     return color;
     }
 }

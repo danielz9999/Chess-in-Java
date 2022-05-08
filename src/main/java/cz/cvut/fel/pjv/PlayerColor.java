@@ -1,6 +1,6 @@
 package cz.cvut.fel.pjv;
 
-public enum Color {
+public enum PlayerColor {
   WHITE,
   BLACK,
   NONE,

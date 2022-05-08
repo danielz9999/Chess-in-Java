@@ -8,7 +8,6 @@ public class GameRules {
 
     public GameRules() {
         Board board = new Board();
-        View view = new View();
     }
 
     private void changeTurn(){}
