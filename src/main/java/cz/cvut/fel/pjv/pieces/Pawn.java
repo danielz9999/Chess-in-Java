@@ -1,7 +1,10 @@
 package cz.cvut.fel.pjv.pieces;
 
+
 import cz.cvut.fel.pjv.PlayerColor;
 import cz.cvut.fel.pjv.PieceTypes;
+
+import java.util.ArrayList;
 
 public class Pawn extends Piece {
 
@@ -13,4 +16,5 @@ public class Pawn extends Piece {
   public PieceTypes getType() {
     return PieceTypes.PAWN;
   }
+
 }

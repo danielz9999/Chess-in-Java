@@ -4,6 +4,8 @@ import cz.cvut.fel.pjv.PlayerColor;
 import cz.cvut.fel.pjv.Coordinates;
 import cz.cvut.fel.pjv.PieceTypes;
 
+import java.util.ArrayList;
+
 //A generic Piece class which is extended by every specific piece class
 public abstract class Piece {
   private final PlayerColor color;
@@ -15,10 +17,6 @@ public abstract class Piece {
 
     //All of the following functions will be abstract
 
-
-    public Coordinates[] getMoves(Coordinates currentCoordinates) {
-        return new Coordinates[0];
-    }
 
   public PieceTypes getType() {
         return null;
