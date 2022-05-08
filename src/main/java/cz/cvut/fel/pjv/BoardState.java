@@ -14,9 +14,9 @@ public class BoardState {
 
     private Piece[][] board = new Piece[8][8];
 
-    public BoardState(boolean hasWhiteCastled, boolean hasBlackCastled, int whiteTime, int blackTime, boolean standardSetup) {
-        this.canWhiteCastle = hasWhiteCastled;
-        this.canBlackCastle = hasBlackCastled;
+    public BoardState(boolean canWhiteCastle, boolean canBlackCastle, int whiteTime, int blackTime, boolean standardSetup) {
+        this.canWhiteCastle = canWhiteCastle;
+        this.canBlackCastle = canBlackCastle;
         this.whiteTime = whiteTime;
         this.blackTime = blackTime;
         this.enPassantCoordinates = new Coordinates(-1,-1);
@@ -67,8 +67,16 @@ public class BoardState {
         return canWhiteCastle;
     }
 
+    public void setCanWhiteCastle(boolean canWhiteCastle) {
+        this.canWhiteCastle = canWhiteCastle;
+    }
+
     public boolean isCanBlackCastle() {
         return canBlackCastle;
+    }
+
+    public void setCanBlackCastle(boolean canBlackCastle) {
+        this.canBlackCastle = canBlackCastle;
     }
 
     public int getWhiteTime() {
@@ -101,24 +109,16 @@ public class BoardState {
         return enPassantCoordinates;
     }
 
-    public PlayerColor getCurrentTurn() {
-        return currentTurn;
-    }
-
     public void setEnPassantCoordinates(Coordinates enPassantCoordinates) {
         this.enPassantCoordinates = enPassantCoordinates;
     }
 
+    public PlayerColor getCurrentTurn() {
+        return currentTurn;
+    }
+
     public void setCurrentTurn(PlayerColor currentTurn) {
         this.currentTurn = currentTurn;
-    }
-
-    public void setCanWhiteCastle(boolean canWhiteCastle) {
-        this.canWhiteCastle = canWhiteCastle;
-    }
-
-    public void setCanBlackCastle(boolean canBlackCastle) {
-        this.canBlackCastle = canBlackCastle;
     }
 }
 

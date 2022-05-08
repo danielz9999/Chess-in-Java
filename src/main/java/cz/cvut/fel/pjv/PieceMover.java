@@ -1,13 +1,24 @@
 package cz.cvut.fel.pjv;
 
+import cz.cvut.fel.pjv.view.BoardWindow;
+
 public class PieceMover {
+  private final BoardWindow boardWindow;
+
+  public PieceMover(BoardWindow boardWindow) {
+    this.boardWindow = boardWindow;
+  }
+
   public void movePiece(BoardState board, Coordinates start, Coordinates end) {
     String specialMove = detectSpecialMove(board, start, end);
     PieceTypes type = board.getBoard()[start.getX()][start.getY()].getType();
     PlayerColor color = board.getBoard()[start.getX()][start.getY()].getColor();
 
     board.setPiece(end, type, color);
+    boardWindow.updateButton(end, type, color);
     board.setPiece(start, PieceTypes.NONE, PlayerColor.NONE);
+    boardWindow.updateButton(start, PieceTypes.NONE, PlayerColor.NONE);
+
     if (specialMove.equals("castling")) {
       castle(board, end, color);
     } else if (specialMove.equals("enPassant")) {
@@ -41,7 +52,7 @@ public class PieceMover {
       }
       board.setEnPassantCoordinates(new Coordinates(x, end.getY()));
     } else {
-      board.setEnPassantCoordinates(new Coordinates(-1, -1));
+      board.setEnPassantCoordinates(new Coordinates(-10, -10));
     }
     if (type == PieceTypes.ROOK || type == PieceTypes.KING) {
       if (board.getCurrentTurn() == PlayerColor.WHITE) {
@@ -61,18 +72,26 @@ public class PieceMover {
     if (end.equals(new Coordinates(7, 6))) {
       board.setPiece(new Coordinates(7, 5), PieceTypes.ROOK, color);
       board.setPiece(new Coordinates(7, 7), PieceTypes.NONE, PlayerColor.NONE);
+      boardWindow.updateButton(new Coordinates(7, 5),PieceTypes.ROOK, color);
+      boardWindow.updateButton(new Coordinates(7,7), PieceTypes.NONE, PlayerColor.NONE);
     }
     if (end.equals(new Coordinates(7, 2))) {
       board.setPiece(new Coordinates(7, 3), PieceTypes.ROOK, color);
       board.setPiece(new Coordinates(7, 0), PieceTypes.NONE, PlayerColor.NONE);
+      boardWindow.updateButton(new Coordinates(7, 3),PieceTypes.ROOK, color);
+      boardWindow.updateButton(new Coordinates(7,0), PieceTypes.NONE, PlayerColor.NONE);
     }
     if (end.equals(new Coordinates(0, 2))) {
       board.setPiece(new Coordinates(0, 3), PieceTypes.ROOK, color);
       board.setPiece(new Coordinates(0, 0), PieceTypes.NONE, PlayerColor.NONE);
+      boardWindow.updateButton(new Coordinates(0, 3),PieceTypes.ROOK, color);
+      boardWindow.updateButton(new Coordinates(0,0), PieceTypes.NONE, PlayerColor.NONE);
     }
     if (end.equals(new Coordinates(0, 6))) {
       board.setPiece(new Coordinates(0, 5), PieceTypes.ROOK, color);
       board.setPiece(new Coordinates(0, 7), PieceTypes.NONE, PlayerColor.NONE);
+      boardWindow.updateButton(new Coordinates(0, 5),PieceTypes.ROOK, color);
+      boardWindow.updateButton(new Coordinates(0,7), PieceTypes.NONE, PlayerColor.NONE);
     }
   }
 
@@ -84,5 +103,6 @@ public class PieceMover {
       x = 4;
     }
     board.setPiece(new Coordinates(x, end.getY()), PieceTypes.NONE, PlayerColor.NONE);
+    boardWindow.updateButton(new Coordinates(x, end.getY()), PieceTypes.NONE, PlayerColor.NONE);
   }
 }

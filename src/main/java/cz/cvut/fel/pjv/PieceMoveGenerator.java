@@ -84,34 +84,14 @@ public class PieceMoveGenerator {
         int y = coords.getY();
         PlayerColor color = board.getBoard()[x][y].getColor();
         if (color == PlayerColor.WHITE) {
-            if (board.getBoard()[x-1][y].getColor() == PlayerColor.NONE) {
-                possibleMoves.add(new Coordinates(x-1,y));
-            }
-            if (board.getBoard()[x-2][y].getColor() == PlayerColor.NONE && x == 6) {
-                possibleMoves.add(new Coordinates(x-2,y));
-            }
-            if (board.getBoard()[x-1][y+1].getColor() == PlayerColor.BLACK || new Coordinates(x - 1, y + 1).equals(board.getEnPassantCoordinates())) {
-                possibleMoves.add(new Coordinates(x-1,y+1));
-            }
-            if (board.getBoard()[x-1][y-1].getColor() == PlayerColor.BLACK || new Coordinates(x - 1, y - 1).equals(board.getEnPassantCoordinates())) {
-                possibleMoves.add(new Coordinates(x-1,y-1));
-            }
+            possibleMoves = whitePawnMoves(board, coords);
         } else if (color == PlayerColor.BLACK) {
-            if (board.getBoard()[x+1][y].getColor() == PlayerColor.NONE) {
-                possibleMoves.add(new Coordinates(x+1,y));
-            }
-            if (board.getBoard()[x+2][y].getColor() == PlayerColor.NONE && x == 1) {
-                possibleMoves.add(new Coordinates(x+2,y));
-            }
-            if (board.getBoard()[x+1][y+1].getColor() == PlayerColor.WHITE || new Coordinates(x + 1, y + 1).equals(board.getEnPassantCoordinates())) {
-                possibleMoves.add(new Coordinates(x+1,y+1));
-            }
-            if (board.getBoard()[x+1][y-1].getColor() == PlayerColor.WHITE || new Coordinates(x + 1, y - 1).equals(board.getEnPassantCoordinates())) {
-                possibleMoves.add(new Coordinates(x+1,y-1));
-            }
+            possibleMoves = blackPawnMoves(board, coords);
         }
         return possibleMoves;
     }
+
+
     private ArrayList<Coordinates> generateKnightMoves(BoardState board, Coordinates coords) {
         ArrayList<Coordinates> possibleMoves = new ArrayList<>();
         int x = coords.getX();
@@ -223,6 +203,48 @@ public class PieceMoveGenerator {
             if (clearPath) {
                 possibleMoves.add(new Coordinates(0,2));
             }
+        }
+        return possibleMoves;
+    }
+    private ArrayList<Coordinates> whitePawnMoves(BoardState board, Coordinates coordinates) {
+        ArrayList<Coordinates> possibleMoves = new ArrayList<>();
+        int x = coordinates.getX();
+        int y = coordinates.getY();
+        if (x == 0) {
+            return possibleMoves;
+        }
+        if (board.getBoard()[x-1][y].getColor() == PlayerColor.NONE) {
+            possibleMoves.add(new Coordinates(x-1,y));
+        }
+        if ( x == 6 && board.getBoard()[x-2][y].getColor() == PlayerColor.NONE) {
+            possibleMoves.add(new Coordinates(x-2,y));
+        }
+        if (y != 7 && (board.getBoard()[x - 1][y + 1].getColor() == PlayerColor.BLACK || new Coordinates(x - 1, y + 1).equals(board.getEnPassantCoordinates()))) {
+            possibleMoves.add(new Coordinates(x - 1, y + 1));
+        }
+        if (y != 0 && (board.getBoard()[x - 1][y - 1].getColor() == PlayerColor.BLACK || new Coordinates(x - 1, y - 1).equals(board.getEnPassantCoordinates()))) {
+            possibleMoves.add(new Coordinates(x - 1, y - 1));
+        }
+        return possibleMoves;
+    }
+    private ArrayList<Coordinates> blackPawnMoves(BoardState board, Coordinates coordinates) {
+        ArrayList<Coordinates> possibleMoves = new ArrayList<>();
+        int x = coordinates.getX();
+        int y = coordinates.getY();
+        if (x == 7) {
+            return possibleMoves;
+        }
+        if (board.getBoard()[x+1][y].getColor() == PlayerColor.NONE) {
+            possibleMoves.add(new Coordinates(x+1,y));
+        }
+        if ( x == 6 && board.getBoard()[x+2][y].getColor() == PlayerColor.NONE) {
+            possibleMoves.add(new Coordinates(x+2,y));
+        }
+        if (y != 7 && (board.getBoard()[x + 1][y + 1].getColor() == PlayerColor.WHITE || new Coordinates(x + 1, y + 1).equals(board.getEnPassantCoordinates()))) {
+            possibleMoves.add(new Coordinates(x + 1, y + 1));
+        }
+        if (y != 0 && (board.getBoard()[x + 1][y - 1].getColor() == PlayerColor.WHITE || new Coordinates(x + 1, y - 1).equals(board.getEnPassantCoordinates()))) {
+            possibleMoves.add(new Coordinates(x + 1, y - 1));
         }
         return possibleMoves;
     }

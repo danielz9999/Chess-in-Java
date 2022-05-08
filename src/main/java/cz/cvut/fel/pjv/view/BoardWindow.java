@@ -1,9 +1,6 @@
 package cz.cvut.fel.pjv.view;
 
-import cz.cvut.fel.pjv.BoardState;
-import cz.cvut.fel.pjv.Controller;
-import cz.cvut.fel.pjv.Coordinates;
-import cz.cvut.fel.pjv.PlayerColor;
+import cz.cvut.fel.pjv.*;
 import cz.cvut.fel.pjv.pieces.Piece;
 
 import javax.swing.*;
@@ -82,8 +79,45 @@ public class BoardWindow {
             }
         }
     }
-    private void updateButton(Coordinates coordinates) {
+    public void updateButton(Coordinates coordinates, PieceTypes type, PlayerColor color) {
+        int x = coordinates.getX();
+        int y = coordinates.getY();
+        if (color == PlayerColor.WHITE) {
+            switch (type) {
+                case KNIGHT -> board[x][y].setText("♘");
+                case KING -> board[x][y].setText("♔");
+                case PAWN -> board[x][y].setText("♙");
+                case ROOK -> board[x][y].setText("♖");
+                case QUEEN -> board[x][y].setText("♕");
+                case BISHOP -> board[x][y].setText("♗");
+                case NONE -> board[x][y].setText(" ");
+            }
+        } else if (color == PlayerColor.BLACK) {
+            switch (type) {
+                case KNIGHT -> board[x][y].setText("♞");
+                case KING -> board[x][y].setText("♚");
+                case PAWN -> board[x][y].setText("♟");
+                case ROOK -> board[x][y].setText("♜");
+                case QUEEN -> board[x][y].setText("♛");
+                case BISHOP -> board[x][y].setText("♝");
+                case NONE -> board[x][y].setText(" ");
+            }
+        } else {
+            board[x][y].setText(" ");
+        }
 
+    }
+    public void highlightButton(Coordinates coordinates) {
+        board[coordinates.getX()][coordinates.getY()].setBackground(Color.DARK_GRAY);
+    }
+    public void dehighlightButton(Coordinates coordinates) {
+        int x = coordinates.getX();
+        int y = coordinates.getY();
+        if (((x + y) % 2) == 0) {
+            board[x][y].setBackground(Color.WHITE);
+        } else {
+            board[x][y].setBackground(Color.lightGray);
+        }
     }
     private void buttonClicked(Coordinates coordinates) {
         if (isFirstClick) {

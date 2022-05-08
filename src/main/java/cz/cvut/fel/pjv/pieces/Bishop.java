@@ -1,10 +1,7 @@
 package cz.cvut.fel.pjv.pieces;
 
-import cz.cvut.fel.pjv.Coordinates;
-import cz.cvut.fel.pjv.PlayerColor;
 import cz.cvut.fel.pjv.PieceTypes;
-
-import java.util.ArrayList;
+import cz.cvut.fel.pjv.PlayerColor;
 
 public class Bishop extends Piece {
   public Bishop(PlayerColor player) {
@@ -15,5 +12,4 @@ public class Bishop extends Piece {
   public PieceTypes getType() {
     return PieceTypes.BISHOP;
   }
-
 }
