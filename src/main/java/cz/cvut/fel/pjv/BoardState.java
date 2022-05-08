@@ -9,6 +9,9 @@ public class BoardState {
     private int whiteTime;
     private int blackTime;
 
+    private Coordinates enPassantCoordinates;
+    private PlayerColor currentTurn;
+
     private Piece[][] board = new Piece[8][8];
 
     public BoardState(boolean hasWhiteCastled, boolean hasBlackCastled, int whiteTime, int blackTime, boolean standardSetup) {
@@ -91,6 +94,22 @@ public class BoardState {
             case NONE -> new NullPiece();
         };
         board[coords.getX()][coords.getY()] = temp;
+    }
+
+    public Coordinates getEnPassantCoordinates() {
+        return enPassantCoordinates;
+    }
+
+    public PlayerColor getCurrentTurn() {
+        return currentTurn;
+    }
+
+    public void setEnPassantCoordinates(Coordinates enPassantCoordinates) {
+        this.enPassantCoordinates = enPassantCoordinates;
+    }
+
+    public void setCurrentTurn(PlayerColor currentTurn) {
+        this.currentTurn = currentTurn;
     }
 }
 
