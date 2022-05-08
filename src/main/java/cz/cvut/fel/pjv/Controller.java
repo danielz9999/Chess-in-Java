@@ -11,7 +11,6 @@ public class Controller {
 
 
     public Controller() {
-        gameRules = new GameRules();
         view = new View(this);
         view.mainMenu();
     }
@@ -19,10 +18,11 @@ public class Controller {
     public void startGame(BoardState board) {
         this.board = board;
         timer = new Timer(board.getWhiteTime(), board.getBlackTime());
+        gameRules = new GameRules(board);
         view.boardWindow(board);
     }
     public boolean firstClick(Coordinates coordinates) {
-        return false;
+        return gameRules.firstClick(coordinates);
     }
     public void secondClick(Coordinates coordinates) {
 

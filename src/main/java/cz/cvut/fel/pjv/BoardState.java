@@ -19,7 +19,8 @@ public class BoardState {
         this.canBlackCastle = hasBlackCastled;
         this.whiteTime = whiteTime;
         this.blackTime = blackTime;
-
+        this.enPassantCoordinates = new Coordinates(-1,-1);
+        this.currentTurn = PlayerColor.WHITE;
         if (standardSetup) {
             standardSetup();
         } else {
@@ -110,6 +111,14 @@ public class BoardState {
 
     public void setCurrentTurn(PlayerColor currentTurn) {
         this.currentTurn = currentTurn;
+    }
+
+    public void setCanWhiteCastle(boolean canWhiteCastle) {
+        this.canWhiteCastle = canWhiteCastle;
+    }
+
+    public void setCanBlackCastle(boolean canBlackCastle) {
+        this.canBlackCastle = canBlackCastle;
     }
 }
 
