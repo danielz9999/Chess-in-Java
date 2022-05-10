@@ -173,14 +173,14 @@ public class PieceMoveGenerator {
             for (int i = 5; i < 7; i++) {
                 clearPath = (board.getBoard()[7][i].getColor() == PlayerColor.NONE);
             }
-            if (clearPath) {
+            if (clearPath && board.getBoard()[7][7].getType() == PieceTypes.ROOK) {
                 possibleMoves.add(new Coordinates(7,6));
             }
             clearPath = true;
             for (int i = 1; i < 4; i++) {
                 clearPath = (board.getBoard()[7][i].getColor() == PlayerColor.NONE);
             }
-            if (clearPath) {
+            if (clearPath && board.getBoard()[7][0].getType() == PieceTypes.ROOK) {
                 possibleMoves.add(new Coordinates(7,2));
             }
         }
@@ -193,14 +193,14 @@ public class PieceMoveGenerator {
             for (int i = 5; i < 7; i++) {
                 clearPath = (board.getBoard()[0][i].getColor() == PlayerColor.NONE);
             }
-            if (clearPath) {
+            if (clearPath && board.getBoard()[0][7].getType() == PieceTypes.ROOK) {
                 possibleMoves.add(new Coordinates(0,6));
             }
             clearPath = true;
             for (int i = 1; i < 4; i++) {
                 clearPath = (board.getBoard()[0][i].getColor() == PlayerColor.NONE);
             }
-            if (clearPath) {
+            if (clearPath && board.getBoard()[0][0].getType() == PieceTypes.ROOK) {
                 possibleMoves.add(new Coordinates(0,2));
             }
         }
