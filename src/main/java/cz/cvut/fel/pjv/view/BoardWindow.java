@@ -128,4 +128,14 @@ public class BoardWindow {
             isFirstClick = true;
         }
     }
+    public void gameEnd(Boolean isCheckmate, PlayerColor player) {
+
+        if (!isCheckmate) {
+            JOptionPane.showMessageDialog(frame, "The game has ended in a draw", "Game end message", JOptionPane.PLAIN_MESSAGE);
+            System.exit(0);
+        }
+
+        JOptionPane.showMessageDialog(frame, player.name() + " player has won the game!", "Game end message", JOptionPane.PLAIN_MESSAGE);
+        System.exit(0);
+    }
 }

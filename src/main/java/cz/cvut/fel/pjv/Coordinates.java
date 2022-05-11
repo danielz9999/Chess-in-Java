@@ -5,8 +5,8 @@ import java.util.Objects;
 // The Coordinates class equivalent to Pair<Integer, Integer>
 // Created to improve readability, clarity
 public class Coordinates {
-  private Integer x;
-  private Integer y;
+  private final Integer x;
+  private final Integer y;
 
   public Coordinates(int a, int b) {
     x = a;

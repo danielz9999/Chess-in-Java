@@ -11,11 +11,7 @@ public abstract class Piece {
     color = player;
   }
 
-  // All of the following functions will be abstract
-
-  public PieceTypes getType() {
-    return null;
-  }
+  public abstract PieceTypes getType();
 
   public PlayerColor getColor() {
     return color;

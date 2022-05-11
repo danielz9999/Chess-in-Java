@@ -172,6 +172,9 @@ public class PieceMoveGenerator {
             boolean clearPath = true;
             for (int i = 5; i < 7; i++) {
                 clearPath = (board.getBoard()[7][i].getColor() == PlayerColor.NONE);
+                if (!clearPath) {
+                    break;
+                }
             }
             if (clearPath && board.getBoard()[7][7].getType() == PieceTypes.ROOK) {
                 possibleMoves.add(new Coordinates(7,6));
@@ -179,6 +182,9 @@ public class PieceMoveGenerator {
             clearPath = true;
             for (int i = 1; i < 4; i++) {
                 clearPath = (board.getBoard()[7][i].getColor() == PlayerColor.NONE);
+                if (!clearPath) {
+                    break;
+                }
             }
             if (clearPath && board.getBoard()[7][0].getType() == PieceTypes.ROOK) {
                 possibleMoves.add(new Coordinates(7,2));
@@ -192,6 +198,9 @@ public class PieceMoveGenerator {
             boolean clearPath = true;
             for (int i = 5; i < 7; i++) {
                 clearPath = (board.getBoard()[0][i].getColor() == PlayerColor.NONE);
+                if (!clearPath) {
+                    break;
+                }
             }
             if (clearPath && board.getBoard()[0][7].getType() == PieceTypes.ROOK) {
                 possibleMoves.add(new Coordinates(0,6));
@@ -199,6 +208,9 @@ public class PieceMoveGenerator {
             clearPath = true;
             for (int i = 1; i < 4; i++) {
                 clearPath = (board.getBoard()[0][i].getColor() == PlayerColor.NONE);
+                if (!clearPath) {
+                    break;
+                }
             }
             if (clearPath && board.getBoard()[0][0].getType() == PieceTypes.ROOK) {
                 possibleMoves.add(new Coordinates(0,2));
@@ -237,7 +249,7 @@ public class PieceMoveGenerator {
         if (board.getBoard()[x+1][y].getColor() == PlayerColor.NONE) {
             possibleMoves.add(new Coordinates(x+1,y));
         }
-        if ( x == 6 && board.getBoard()[x+2][y].getColor() == PlayerColor.NONE) {
+        if ( x == 1 && board.getBoard()[x+2][y].getColor() == PlayerColor.NONE) {
             possibleMoves.add(new Coordinates(x+2,y));
         }
         if (y != 7 && (board.getBoard()[x + 1][y + 1].getColor() == PlayerColor.WHITE || new Coordinates(x + 1, y + 1).equals(board.getEnPassantCoordinates()))) {

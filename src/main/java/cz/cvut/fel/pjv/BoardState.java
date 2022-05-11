@@ -13,6 +13,10 @@ public class BoardState {
     private PlayerColor currentTurn;
 
     private Piece[][] board = new Piece[8][8];
+    private final BotPlayer botPlayer = null;
+
+    private Coordinates whiteKingPosition;
+    private Coordinates blackKingPosition;
 
     public BoardState(boolean canWhiteCastle, boolean canBlackCastle, int whiteTime, int blackTime, boolean standardSetup) {
         this.canWhiteCastle = canWhiteCastle;
@@ -61,6 +65,8 @@ public class BoardState {
                 board[i+2][j] = new NullPiece();
             }
         }
+        setWhiteKingPosition(new Coordinates(7,4));
+        setBlackKingPosition(new Coordinates(0,4));
     }
 
     public boolean isCanWhiteCastle() {
@@ -119,6 +125,22 @@ public class BoardState {
 
     public void setCurrentTurn(PlayerColor currentTurn) {
         this.currentTurn = currentTurn;
+    }
+
+    public Coordinates getWhiteKingPosition() {
+        return whiteKingPosition;
+    }
+
+    public void setWhiteKingPosition(Coordinates whiteKingPosition) {
+        this.whiteKingPosition = whiteKingPosition;
+    }
+
+    public Coordinates getBlackKingPosition() {
+        return blackKingPosition;
+    }
+
+    public void setBlackKingPosition(Coordinates blackKingPosition) {
+        this.blackKingPosition = blackKingPosition;
     }
 }
 

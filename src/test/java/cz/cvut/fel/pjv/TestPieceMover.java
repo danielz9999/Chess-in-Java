@@ -19,8 +19,7 @@ class TestPieceMover {
   @BeforeAll
   static void initialise() {
     board = new BoardState(true, true, -1, -1, true);
-    BoardWindow boardWindow = new BoardWindow(board, null );
-    pieceMover = new PieceMover(boardWindow);
+    pieceMover = new PieceMover(null);
     log.setLevel(Level.FINEST);
 
   }
