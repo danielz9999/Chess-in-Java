@@ -13,6 +13,7 @@ public class GameRules {
   private ArrayList<Coordinates> moves;
   private Coordinates startCoordinates;
   private final CheckMoveControl checkMoveControl;
+  private final CheckmateChecker checkmateChecker;
 
   private ArrayList<Coordinates> whitePositions;
   private ArrayList<Coordinates> blackPositions;
@@ -24,9 +25,11 @@ public class GameRules {
     pieceMoveGenerator = new PieceMoveGenerator();
     pieceMover = new PieceMover(boardWindow);
     checkMoveControl = new CheckMoveControl(board, whitePositions, blackPositions);
+    checkmateChecker = new CheckmateChecker(checkMoveControl);
   }
 
   public boolean firstClick(Coordinates coordinates) {
+
     startCoordinates = coordinates;
     ArrayList<Coordinates> possibleMoves =
         (ArrayList<Coordinates>) pieceMoveGenerator.generateMoves(board, coordinates);
@@ -51,12 +54,17 @@ public class GameRules {
       pieceMover.movePiece(board, startCoordinates, coordinates);
       refreshPiecePositions();
 
-    } else {
-      startCoordinates = null;
-      moves = null;
-      return false;
+
+      if (checkmateChecker.checkForMate(board, whitePositions, blackPositions)) {
+        boardWindow.gameEnd(checkmateChecker.checkForCheckmate(), board.getCurrentTurn().getOpposite());
+      }
+      return true;
     }
-    return true;
+    startCoordinates = null;
+    moves = null;
+    return false;
+
+
   }
 
   private void refreshPiecePositions() {
@@ -76,4 +84,5 @@ public class GameRules {
       this.checkMoveControl.setPiecePositions(whitePositions, blackPositions);
     }
   }
+
 }
