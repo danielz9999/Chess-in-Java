@@ -12,8 +12,8 @@ public class BoardState {
     private Coordinates enPassantCoordinates;
     private PlayerColor currentTurn;
 
-    private Piece[][] board = new Piece[8][8];
-    private final BotPlayer botPlayer = null;
+    private final Piece[][] board = new Piece[8][8];
+    private PlayerColor botPlayerColor;
 
     private Coordinates whiteKingPosition;
     private Coordinates blackKingPosition;
@@ -141,6 +141,14 @@ public class BoardState {
 
     public void setBlackKingPosition(Coordinates blackKingPosition) {
         this.blackKingPosition = blackKingPosition;
+    }
+
+    public void setBotPlayerColor(PlayerColor botPlayerColor) {
+        this.botPlayerColor = botPlayerColor;
+    }
+
+    public PlayerColor getBotPlayerColor() {
+        return botPlayerColor;
     }
 }
 

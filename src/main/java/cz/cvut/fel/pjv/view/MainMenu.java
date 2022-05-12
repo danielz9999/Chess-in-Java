@@ -3,10 +3,15 @@ package cz.cvut.fel.pjv.view;
 import cz.cvut.fel.pjv.BoardState;
 import cz.cvut.fel.pjv.Controller;
 import cz.cvut.fel.pjv.FileLoader;
+import cz.cvut.fel.pjv.PlayerColor;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
+
+import static cz.cvut.fel.pjv.PlayerColor.*;
+
+
 // Class implementing the gui menu that shows up when launching the application
 public class MainMenu {
   Controller controller;
@@ -16,6 +21,7 @@ public class MainMenu {
   private final FileLoader loader = new FileLoader();
   private final JFrame frame;
   private JFrame submenuFrame;
+  private PlayerColor botColor = NONE;
 
   public MainMenu(Controller controller) {
     this.controller = controller;
@@ -115,9 +121,12 @@ public class MainMenu {
 
     newGame.addActionListener(
         e1 -> {
+          playVsComputerQuestion();
           timerQuestion();
           boardState = new BoardState(true, true, whiteTime, blackTime, true);
+          boardState.setBotPlayerColor(botColor);
           controller.startGame(boardState);
+
         });
     load.addActionListener(
         e1 -> {
@@ -125,10 +134,41 @@ public class MainMenu {
           boardState = loader.loadFile(fileName);
           controller.startGame(boardState);
         });
-    customGame.addActionListener(e1 -> timerQuestion());
+    customGame.addActionListener(e1 -> {playVsComputerQuestion();
+                                        timerQuestion();
+
+
+    });
     submenuFrame.setLocationRelativeTo(null);
     submenuFrame.setVisible(true);
   }
+
+  private void playVsComputerQuestion() {
+    int botPlayChoice =
+            JOptionPane.showConfirmDialog(
+                    frame,
+                    "Would you like to play VS a computer?",
+                    "Computer opponent choice",
+                    JOptionPane.YES_NO_OPTION);
+    if (botPlayChoice == JOptionPane.YES_OPTION) {
+        Object[] colors = {WHITE, BLACK};
+      int playerColorChoice = JOptionPane.showOptionDialog(frame,
+              "Which side (color) do you want to play?",
+              "Player color choice",
+              JOptionPane.YES_NO_OPTION,
+              JOptionPane.QUESTION_MESSAGE,
+              null,
+              colors,
+              colors[0]);
+      if (playerColorChoice == JOptionPane.YES_OPTION) {
+        botColor = BLACK;
+
+      } else {
+        botColor = WHITE;
+      }
+    }
+  }
+
 
   public int getWhiteTime() {
     return whiteTime;

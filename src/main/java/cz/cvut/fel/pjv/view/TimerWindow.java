@@ -110,7 +110,7 @@ public class TimerWindow {
         timeTwo.setText("    Remaining time of player 2:     "+mins+" : "+sec);
     }
     public void changeTurn(PlayerColor color) {
-        turnText.setText("It is the turn of player: " + color + "        ");
+        turnText.setText("    It is the turn of player: " + color + "        ");
 
     }
 }
