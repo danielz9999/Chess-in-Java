@@ -13,8 +13,8 @@ public class MainMenu {
   private int whiteTime = -1;
   private int blackTime = -1;
   private BoardState boardState;
-  private FileLoader loader = new FileLoader();
-  private JFrame frame;
+  private final FileLoader loader = new FileLoader();
+  private final JFrame frame;
   private JFrame submenuFrame;
 
   public MainMenu(Controller controller) {
@@ -32,9 +32,7 @@ public class MainMenu {
 
     play.setText("Play");
     play.addActionListener(
-        e -> {
-          submenu();
-        });
+        e -> submenu());
 
     exit.setText("Exit");
     exit.addActionListener(
@@ -61,7 +59,7 @@ public class MainMenu {
       whiteTime =
           Integer.parseInt(
               JOptionPane.showInputDialog(
-                  null, "Please enter time (in seconds) for player with white pieces:"));
+                  null, "Please enter time (in seconds) for player with white pieces (max. 3559):"));
       if (whiteTime > 3559) {
 
         whiteTime = 3599;
@@ -69,7 +67,7 @@ public class MainMenu {
       blackTime =
           Integer.parseInt(
               JOptionPane.showInputDialog(
-                  null, "Please enter time (in seconds) for player with black pieces (max. 3559)"));
+                  null, "Please enter time (in seconds) for player with black pieces (max. 3559):"));
       if (blackTime > 3559) {
 
         blackTime = 3599;

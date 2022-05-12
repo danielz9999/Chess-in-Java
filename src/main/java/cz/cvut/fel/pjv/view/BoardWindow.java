@@ -9,9 +9,9 @@ import java.awt.event.ActionEvent;
 
 //A class that implements a windows in which the chess board is
 public class BoardWindow {
-  private JButton[][] board = new JButton[8][8];
+  private final JButton[][] board = new JButton[8][8];
     private JFrame frame;
-    private Controller controller;
+    private final Controller controller;
     private boolean isFirstClick = true;
 
 
@@ -46,7 +46,7 @@ public class BoardWindow {
                         frame.add(board[i][j]);
             }
         }
-
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
     private void drawPieces(BoardState boardState) {
@@ -130,7 +130,7 @@ public class BoardWindow {
     }
     public void gameEnd(Boolean isCheckmate, PlayerColor player) {
 
-        if (!isCheckmate) {
+        if (Boolean.FALSE.equals(isCheckmate)) {
             JOptionPane.showMessageDialog(frame, "The game has ended in a draw", "Game end message", JOptionPane.PLAIN_MESSAGE);
             System.exit(0);
         }

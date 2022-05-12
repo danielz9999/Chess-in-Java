@@ -6,7 +6,7 @@ import cz.cvut.fel.pjv.view.View;
 public class Controller {
   private BoardState board;
   private Timer timer;
-  private View view;
+  private final View view;
   private GameRules gameRules = null;
 
   public Controller() {
@@ -16,20 +16,26 @@ public class Controller {
 
   public void startGame(BoardState board) {
     this.board = board;
-    timer = new Timer(board.getWhiteTime(), board.getBlackTime());
     view.boardWindow(board);
-
+    timer = new Timer(board.getWhiteTime(), board.getBlackTime(), this);
+    timer.start();
 
   }
 
   public boolean firstClick(Coordinates coordinates) {
     if (gameRules == null) {
-      gameRules = new GameRules(board, view.getBoardWindow());
+      gameRules = new GameRules(board, view.getBoardWindow(), this);
     }
     return gameRules.firstClick(coordinates);
   }
 
-  public boolean secondClick(Coordinates coordinates) {
-    return gameRules.secondClick(coordinates);
+  public void secondClick(Coordinates coordinates) {
+   gameRules.secondClick(coordinates);
+  }
+  public void changeTurn() {
+    timer.changeTurn();
+  }
+  public void gameEnd(PlayerColor color) {
+    view.getBoardWindow().gameEnd(true, color);
   }
 }

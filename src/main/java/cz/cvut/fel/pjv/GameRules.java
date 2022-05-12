@@ -18,7 +18,9 @@ public class GameRules {
   private ArrayList<Coordinates> whitePositions;
   private ArrayList<Coordinates> blackPositions;
 
-  public GameRules(BoardState board, BoardWindow boardWindow) {
+  private final Controller controller;
+
+  public GameRules(BoardState board, BoardWindow boardWindow, Controller controller) {
     this.board = board;
     this.boardWindow = boardWindow;
     refreshPiecePositions();
@@ -26,6 +28,7 @@ public class GameRules {
     pieceMover = new PieceMover(boardWindow);
     checkMoveControl = new CheckMoveControl(board, whitePositions, blackPositions);
     checkmateChecker = new CheckmateChecker(checkMoveControl);
+    this.controller = controller;
   }
 
   public boolean firstClick(Coordinates coordinates) {
@@ -45,7 +48,7 @@ public class GameRules {
       return true;
     }
   }
-  public boolean secondClick(Coordinates coordinates) {
+  public void secondClick(Coordinates coordinates) {
     for (Coordinates move : moves) {
       boardWindow.dehighlightButton(move);
     }
@@ -55,16 +58,15 @@ public class GameRules {
       refreshPiecePositions();
 
 
+      controller.changeTurn();
       if (checkmateChecker.checkForMate(board, whitePositions, blackPositions)) {
         boardWindow.gameEnd(checkmateChecker.checkForCheckmate(), board.getCurrentTurn().getOpposite());
       }
-      return true;
+
+
     }
     startCoordinates = null;
     moves = null;
-    return false;
-
-
   }
 
   private void refreshPiecePositions() {
