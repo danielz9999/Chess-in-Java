@@ -5,7 +5,9 @@ import java.util.ArrayList;
 public abstract class BotPlayer {
   private PlayerColor color;
 
-  BotPlayer(PlayerColor pieceColor) {}
+  BotPlayer(PlayerColor pieceColor) {
+    color = pieceColor;
+  }
 
   public abstract Coordinates pickPiece(ArrayList<Coordinates> options);
 

@@ -34,7 +34,13 @@ public class GameRules {
     checkMoveControl = new CheckMoveControl(board, whitePositions, blackPositions);
     checkmateChecker = new CheckmateChecker(checkMoveControl);
     this.controller = controller;
+    log.info("Creating bot player with color: "+ board.getBotPlayerColor());
     botPlayer = new RandomBotPlayer(board.getBotPlayerColor());
+
+    if (botPlayer.getColor() != PlayerColor.NONE && botPlayer.getColor() == board.getCurrentTurn()) {
+      botPlayerMove();
+    }
+
   }
 
   public boolean firstClick(Coordinates coordinates) {
@@ -70,6 +76,7 @@ public class GameRules {
       }
 
       if (botPlayer.getColor() != PlayerColor.NONE) {
+        log.info("Initiating bot move with color: " + botPlayer.getColor());
         botPlayerMove();
       }
     }

@@ -9,7 +9,6 @@ public class View {
   private final Controller controller;
   private MainMenu mainMenu;
   private BoardWindow boardWindow;
-  private TimerWindow timerWindow;
 
   public View(Controller controller) {
     this.controller = controller;

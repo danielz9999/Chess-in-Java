@@ -8,6 +8,7 @@ import cz.cvut.fel.pjv.PlayerColor;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
+import java.util.logging.Logger;
 
 import static cz.cvut.fel.pjv.PlayerColor.*;
 
@@ -22,9 +23,12 @@ public class MainMenu {
   private final JFrame frame;
   private JFrame submenuFrame;
   private PlayerColor botColor = NONE;
+  private CustomGameBuilder customGameBuilder;
+  private final Logger log = Logger.getLogger(MainMenu.class.getName());
 
   public MainMenu(Controller controller) {
     this.controller = controller;
+
     frame = new JFrame("Chess");
 
     JButton exit = new JButton();
@@ -125,6 +129,7 @@ public class MainMenu {
           timerQuestion();
           boardState = new BoardState(true, true, whiteTime, blackTime, true);
           boardState.setBotPlayerColor(botColor);
+          log.info("Starting normal game with bot color: " + boardState.getBotPlayerColor());
           controller.startGame(boardState);
 
         });
@@ -136,7 +141,9 @@ public class MainMenu {
         });
     customGame.addActionListener(e1 -> {playVsComputerQuestion();
                                         timerQuestion();
-
+                                        customGameBuilder = new CustomGameBuilder(this,whiteTime,blackTime);
+                                        customGameBuilder.customGameInit();
+                                        submenuFrame.setVisible(false);
 
     });
     submenuFrame.setLocationRelativeTo(null);
@@ -162,13 +169,19 @@ public class MainMenu {
               colors[0]);
       if (playerColorChoice == JOptionPane.YES_OPTION) {
         botColor = BLACK;
-
+        log.info("Bot player color chose: BLACK");
       } else {
         botColor = WHITE;
+        log.info("Bot player color chose: WHITE");
+
       }
     }
   }
-
+  public void customGameFinishSetup(BoardState customBoard) {
+    log.info("Starting custom game, botcolor: " + botColor);
+    customBoard.setBotPlayerColor(botColor);
+    controller.startGame(customBoard);
+  }
 
   public int getWhiteTime() {
     return whiteTime;

@@ -19,6 +19,7 @@ public class Controller {
     view.boardWindow(board);
     timer = new Timer(board.getWhiteTime(), board.getBlackTime(), this);
     timer.start();
+    gameRules = new GameRules(board, view.getBoardWindow(), this);
 
   }
 
