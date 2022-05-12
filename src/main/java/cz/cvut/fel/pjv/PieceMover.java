@@ -72,8 +72,10 @@ public class PieceMover {
       }
     }
     if (board.getCurrentTurn() == PlayerColor.WHITE) {
+      whitePawnPromotionCheck(board, end, type);
       board.setCurrentTurn(PlayerColor.BLACK);
     } else {
+      blackPawnPromotionCheck(board, end, type);
       board.setCurrentTurn(PlayerColor.WHITE);
     }
   }
@@ -123,6 +125,22 @@ public class PieceMover {
     board.setPiece(new Coordinates(x, end.getY()), PieceTypes.NONE, PlayerColor.NONE);
     if (boardWindow != null) {
       boardWindow.updateButton(new Coordinates(x, end.getY()), PieceTypes.NONE, PlayerColor.NONE);
+    }
+  }
+
+  private void whitePawnPromotionCheck(BoardState board, Coordinates end, PieceTypes type) {
+    if (end.getX() == 0 && type == PieceTypes.PAWN && boardWindow != null) {
+      PieceTypes chosenPiece = boardWindow.pawnPromotion();
+      boardWindow.updateButton(end, chosenPiece, PlayerColor.WHITE);
+      board.setPiece(end, chosenPiece, PlayerColor.WHITE);
+    }
+  }
+
+  private void blackPawnPromotionCheck(BoardState board, Coordinates end, PieceTypes type) {
+    if (end.getX() == 7 && type == PieceTypes.PAWN && boardWindow != null) {
+      PieceTypes chosenPiece = boardWindow.pawnPromotion();
+      boardWindow.updateButton(end, chosenPiece, PlayerColor.BLACK);
+      board.setPiece(end, chosenPiece, PlayerColor.BLACK);
     }
   }
 }

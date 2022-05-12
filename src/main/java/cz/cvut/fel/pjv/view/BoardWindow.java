@@ -128,6 +128,12 @@ public class BoardWindow {
             isFirstClick = true;
         }
     }
+    public PieceTypes pawnPromotion() {
+        PieceTypes[] option = {PieceTypes.PAWN, PieceTypes.ROOK, PieceTypes.BISHOP, PieceTypes.QUEEN, PieceTypes.KNIGHT};
+        return (PieceTypes) JOptionPane.showInputDialog(null, "Choose to which piece to promote pawn",
+                                                        "Pawn promotion dialog", JOptionPane.QUESTION_MESSAGE, null,
+                                                            option, option[0]);
+    }
     public void gameEnd(Boolean isCheckmate, PlayerColor player) {
 
         if (Boolean.FALSE.equals(isCheckmate)) {
