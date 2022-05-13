@@ -8,6 +8,7 @@ import cz.cvut.fel.pjv.PlayerColor;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.util.logging.Logger;
 
 import static cz.cvut.fel.pjv.PlayerColor.*;
@@ -86,8 +87,11 @@ public class MainMenu {
   }
 
   private String filePathQuestion() {
+    JOptionPane.showMessageDialog(null, "Please load from a .pgn or .txt format", "Format notice", JOptionPane.PLAIN_MESSAGE);
 
     JFileChooser fileChooser = new JFileChooser();
+    File workingDirectory = new File(System.getProperty("user.dir"));
+    fileChooser.setCurrentDirectory(workingDirectory);
     fileChooser.setDialogTitle("Choose a file to load from: ");
     int ret = fileChooser.showOpenDialog(null);
     if (ret != JFileChooser.APPROVE_OPTION) {

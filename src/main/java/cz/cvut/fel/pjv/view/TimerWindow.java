@@ -1,10 +1,14 @@
 package cz.cvut.fel.pjv.view;
 
+import cz.cvut.fel.pjv.BoardState;
 import cz.cvut.fel.pjv.Controller;
+import cz.cvut.fel.pjv.FileLoader;
 import cz.cvut.fel.pjv.PlayerColor;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.io.File;
 import java.util.ArrayList;
 
 
@@ -15,9 +19,11 @@ public class TimerWindow {
     JLabel timeOne;
     JLabel timeTwo;
     Controller controller;
+    private final FileLoader loader;
 
     public TimerWindow(int whiteTime, int blackTime, Controller controller) {
         this.controller = controller;
+        this.loader = new FileLoader();
         init(whiteTime, blackTime);
     }
 
@@ -97,6 +103,9 @@ public class TimerWindow {
 
 
         saveButton.addActionListener(e -> controller.saveGame());
+        loadButton.addActionListener(e -> {String fileName = filePathQuestion();
+                                          BoardState boardState = loader.loadFile(fileName);
+                                          controller.startGame(boardState);});
 
         buttonPanel.add(saveButton);
         buttonPanel.add(loadButton);
@@ -115,5 +124,21 @@ public class TimerWindow {
     public void changeTurn(PlayerColor color) {
         turnText.setText("    It is the turn of player: " + color + "        ");
 
+    }
+    private String filePathQuestion() {
+        JOptionPane.showMessageDialog(null, "Please load from a .pgn or .txt format", "Format notice", JOptionPane.PLAIN_MESSAGE);
+
+        JFileChooser fileChooser = new JFileChooser();
+        File workingDirectory = new File(System.getProperty("user.dir"));
+        fileChooser.setCurrentDirectory(workingDirectory);
+        fileChooser.setDialogTitle("Choose a file to load from: ");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("png fromats", "pgn", "txt");
+        fileChooser.setFileFilter(filter);
+
+        int ret = fileChooser.showOpenDialog(null);
+        if (ret != JFileChooser.APPROVE_OPTION) {
+            return null;
+        }
+        return fileChooser.getSelectedFile().getAbsolutePath();
     }
 }

@@ -11,6 +11,7 @@ public class Controller {
   private PGNHistory pgnHistory;
   private FileSaver fileSaver;
 
+
   public Controller() {
     view = new View(this);
     view.mainMenu();
