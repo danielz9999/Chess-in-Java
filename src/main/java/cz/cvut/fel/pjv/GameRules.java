@@ -4,8 +4,12 @@ import cz.cvut.fel.pjv.view.BoardWindow;
 
 import java.util.ArrayList;
 import java.util.logging.Logger;
-
-// The class ensuring the correct application of chess rules
+/**
+ * The Model part of the MVC model
+ * Maintains the rules of chess by keeping track of the logical parts
+ * Decides what happens on button clicks, changes turns, allows for bot player turns, requests for graphical changes from View
+ *
+ */
 public class GameRules {
   private final PieceMoveGenerator pieceMoveGenerator;
   private final BoardState board;
@@ -21,12 +25,7 @@ public class GameRules {
   private ArrayList<Coordinates> whitePositions;
   private ArrayList<Coordinates> blackPositions;
 
-  /**
-   * The Model part of the MVC model
-   * Maintains the rules of chess by keeping track of the logical parts
-   * Decides what happens on button clicks, changes turns, allows for bot player turns, requests for graphical changes from View
-   *
-   */
+
 
   public GameRules(
       BoardState board, BoardWindow boardWindow, Controller controller, PGNHistory pgnHistory) {

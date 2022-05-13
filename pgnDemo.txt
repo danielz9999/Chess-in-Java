@@ -1,0 +1,10 @@
+[Event "Champions Chess Tour FTX Crypto Cup Knockout 2021"]
+[Site ""]
+[Date "2021.05.30"]
+[Round "?"]
+[White "Magnus Carlsen"]
+[Black "Wesley So"]
+[Result "1/2-1/2"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. O-O Nxe4 5. Re1 Nd6 6. Nxe5 Be7 7. Bf1 Nxe5 8.
+Rxe5 O-O 9.
