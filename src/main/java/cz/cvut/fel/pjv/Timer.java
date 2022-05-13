@@ -29,7 +29,7 @@ public class Timer extends Thread {
   @Override
   public void run() {
     PlayerColor winner;
-    timerWindow = new TimerWindow((int) timeW/1000, (int) timeB/1000);
+    timerWindow = new TimerWindow((int) timeW/1000, (int) timeB/1000, controller);
     if (timeW == -1000 || timeB == -1000) return;
     long timeElapsed;
     while (timeW > 0 && timeB > 0) {

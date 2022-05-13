@@ -2,19 +2,45 @@ package cz.cvut.fel.pjv;
 
 import cz.cvut.fel.pjv.view.BoardWindow;
 
+import java.util.logging.Logger;
+
 public class PieceMover {
   private final BoardWindow boardWindow;
+  private final PGNHistory pgnHistory;
+  private final PieceMoveGenerator pieceMoveGenerator;
+  private final static String castling = "castling";
+  private final Logger log = Logger.getLogger(PieceMover.class.getName());
 
 
-  public PieceMover(BoardWindow boardWindow) {
+  public PieceMover(BoardWindow boardWindow, PGNHistory pgnHistory) {
     this.boardWindow = boardWindow;
+    this.pgnHistory = pgnHistory;
+    pieceMoveGenerator = new PieceMoveGenerator();
   }
 
   public void movePiece(BoardState board, Coordinates start, Coordinates end) {
     String specialMove = detectSpecialMove(board, start, end);
     PieceTypes type = board.getBoard()[start.getX()][start.getY()].getType();
     PlayerColor color = board.getBoard()[start.getX()][start.getY()].getColor();
+    boolean isCapture = false;
+    int specialNotation = -1;
+    if (specialMove.equals(castling) && pgnHistory != null) {
 
+      if (end.getY() == 6) {
+        specialNotation = 0;
+        log.info("passing short castling to notation..");
+      } else {
+        specialNotation = 1;
+      }
+    }
+
+    if (board.getBoard()[end.getX()][end.getY()].getColor() == color.getOpposite()) {
+      isCapture = true;
+    }
+    boolean isOverlap = doesNotationOverlap(board, end, start, type, color);
+    if (pgnHistory != null) {
+      pgnHistory.saveMove(start, end, type, specialNotation, isCapture, isOverlap);
+    }
     board.setPiece(end, type, color);
     board.setPiece(start, PieceTypes.NONE, PlayerColor.NONE);
     if (boardWindow != null) {
@@ -22,7 +48,7 @@ public class PieceMover {
       boardWindow.updateButton(start, PieceTypes.NONE, PlayerColor.NONE);
     }
 
-    if (specialMove.equals("castling")) {
+    if (specialMove.equals(castling)) {
       castle(board, end, color);
     } else if (specialMove.equals("enPassant")) {
       enPassant(board, end, color);
@@ -40,7 +66,7 @@ public class PieceMover {
   private String detectSpecialMove(BoardState board, Coordinates start, Coordinates end) {
     PieceTypes type = board.getBoard()[start.getX()][start.getY()].getType();
     if (type == PieceTypes.KING && Math.abs(start.getY() - end.getY()) > 1) {
-      return "castling";
+      return castling;
     }
     if (type == PieceTypes.PAWN) {
       if (Math.abs(start.getX()) - end.getX() > 1) {
@@ -142,5 +168,19 @@ public class PieceMover {
       boardWindow.updateButton(end, chosenPiece, PlayerColor.BLACK);
       board.setPiece(end, chosenPiece, PlayerColor.BLACK);
     }
+  }
+  private boolean doesNotationOverlap(BoardState board, Coordinates end, Coordinates start, PieceTypes type, PlayerColor color) {
+    for (int i = 0; i < 8; i++) {
+      for (int j = 0; j < 8; j++) {
+          if (board.getBoard()[i][j].getColor() == color) {
+            Coordinates position = new Coordinates(i, j);
+            if (board.getBoard()[i][j].getType() == type && !position.equals(start)
+                    && pieceMoveGenerator.generateMoves(board, position).contains(end)) {
+              return true;
+            }
+          }
+      }
+    }
+    return false;
   }
 }

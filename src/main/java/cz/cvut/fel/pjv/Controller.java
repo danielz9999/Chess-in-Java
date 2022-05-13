@@ -8,6 +8,8 @@ public class Controller {
   private Timer timer;
   private final View view;
   private GameRules gameRules = null;
+  private PGNHistory pgnHistory;
+  private FileSaver fileSaver;
 
   public Controller() {
     view = new View(this);
@@ -19,13 +21,15 @@ public class Controller {
     view.boardWindow(board);
     timer = new Timer(board.getWhiteTime(), board.getBlackTime(), this);
     timer.start();
-    gameRules = new GameRules(board, view.getBoardWindow(), this);
+    pgnHistory = new PGNHistory();
+    gameRules = new GameRules(board, view.getBoardWindow(), this, pgnHistory);
+    fileSaver = new FileSaver(pgnHistory);
 
   }
 
   public boolean firstClick(Coordinates coordinates) {
     if (gameRules == null) {
-      gameRules = new GameRules(board, view.getBoardWindow(), this);
+      gameRules = new GameRules(board, view.getBoardWindow(), this, pgnHistory);
     }
     return gameRules.firstClick(coordinates);
   }
@@ -38,5 +42,8 @@ public class Controller {
   }
   public void gameEnd(PlayerColor color) {
     view.getBoardWindow().gameEnd(true, color);
+  }
+  public void saveGame() {
+      fileSaver.savePGN();
   }
 }

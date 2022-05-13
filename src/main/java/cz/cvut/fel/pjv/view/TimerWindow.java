@@ -1,5 +1,6 @@
 package cz.cvut.fel.pjv.view;
 
+import cz.cvut.fel.pjv.Controller;
 import cz.cvut.fel.pjv.PlayerColor;
 
 import javax.swing.*;
@@ -13,8 +14,10 @@ public class TimerWindow {
     JLabel turnText;
     JLabel timeOne;
     JLabel timeTwo;
+    Controller controller;
 
-    public TimerWindow(int whiteTime, int blackTime) {
+    public TimerWindow(int whiteTime, int blackTime, Controller controller) {
+        this.controller = controller;
         init(whiteTime, blackTime);
     }
 
@@ -93,7 +96,7 @@ public class TimerWindow {
         labelPanel.add(Box.createRigidArea(new Dimension(0,20)));
 
 
-
+        saveButton.addActionListener(e -> controller.saveGame());
 
         buttonPanel.add(saveButton);
         buttonPanel.add(loadButton);

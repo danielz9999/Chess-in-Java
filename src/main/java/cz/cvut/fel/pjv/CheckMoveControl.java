@@ -20,7 +20,7 @@ public class CheckMoveControl {
       BoardState board,
       ArrayList<Coordinates> whitePositions,
       ArrayList<Coordinates> blackPositions) {
-    pieceMover = new PieceMover(null);
+    pieceMover = new PieceMover(null, null);
     pieceMoveGenerator = new PieceMoveGenerator();
     this.board = board;
     this.whitePositions = whitePositions;

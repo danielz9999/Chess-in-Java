@@ -25,17 +25,20 @@ public class GameRules {
 
   private final Logger log = Logger.getLogger(GameRules.class.getName());
 
-  public GameRules(BoardState board, BoardWindow boardWindow, Controller controller) {
+
+
+  public GameRules(BoardState board, BoardWindow boardWindow, Controller controller, PGNHistory pgnHistory) {
     this.board = board;
     this.boardWindow = boardWindow;
     refreshPiecePositions();
     pieceMoveGenerator = new PieceMoveGenerator();
-    pieceMover = new PieceMover(boardWindow);
+    pieceMover = new PieceMover(boardWindow, pgnHistory);
     checkMoveControl = new CheckMoveControl(board, whitePositions, blackPositions);
     checkmateChecker = new CheckmateChecker(checkMoveControl);
     this.controller = controller;
     log.info("Creating bot player with color: "+ board.getBotPlayerColor());
     botPlayer = new RandomBotPlayer(board.getBotPlayerColor());
+
 
     if (botPlayer.getColor() != PlayerColor.NONE && botPlayer.getColor() == board.getCurrentTurn()) {
       botPlayerMove();
