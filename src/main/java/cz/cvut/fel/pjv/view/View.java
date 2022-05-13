@@ -3,8 +3,10 @@ package cz.cvut.fel.pjv.view;
 import cz.cvut.fel.pjv.BoardState;
 import cz.cvut.fel.pjv.Controller;
 
-// The main class overlooking the graphical displaying and user interfacing
-// The View part of the MVC model
+/**
+ * The main class overlooking the graphical part of the program
+ * the View part of the MVC model
+ */
 public class View {
   private final Controller controller;
   private MainMenu mainMenu;

@@ -10,23 +10,30 @@ import cz.cvut.fel.pjv.pieces.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
+/**
+ * A GUI class the takes care of custom game setups
+ * The user is shown an 8x8  grid of JButtons, similar to the normal playing board of the BoardWindow class
+ * Then by left-clicking the board, the user can place the piece in whichever positions they want
+ * Right-clicking brings up a menu to finish the setup and begin the game
+ * Takes @Param mainMenu so it can return there after finishing the setup
+ */
 public class CustomGameBuilder {
-    private boolean isWhiteKingPlaced = false;
-    private boolean isBlackKingPlaced = false;
     private final MainMenu mainMenu;
     private final Piece[][] chessBoard = new Piece[8][8];
+    private final Logger log = Logger.getLogger(CustomGameBuilder.class.getName());
+    private boolean isWhiteKingPlaced = false;
+    private boolean isBlackKingPlaced = false;
     private JButton[][] board = new JButton[8][8];
     private int whiteTime;
     private int blackTime;
     private JFrame frame;
-    private final Logger log = Logger.getLogger(CustomGameBuilder.class.getName());
 
     public CustomGameBuilder(MainMenu mainMenu, int whiteTime, int blackTime) {
         log.setLevel(Level.ALL);
@@ -39,7 +46,7 @@ public class CustomGameBuilder {
             }
         }
     }
-
+    //Sets up the board
     public void customGameInit() {
         JOptionPane.showMessageDialog(null, "Left click to place pieces, right click to finish placing pieces",
                                 "Custom game info", JOptionPane.PLAIN_MESSAGE);
@@ -79,6 +86,7 @@ public class CustomGameBuilder {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
+    //Brings up two dropdown menus to choose color and type of piece
     private void buttonClicked(Coordinates coordinates) {
         ArrayList<PieceTypes> pieces = new ArrayList<>();
         pieces.add(PieceTypes.PAWN);
@@ -87,7 +95,7 @@ public class CustomGameBuilder {
         pieces.add(PieceTypes.ROOK);
         pieces.add(PieceTypes.KING);
         pieces.add(PieceTypes.QUEEN);
-        PlayerColor color = PlayerColor.NONE;
+        PlayerColor color;
         PieceTypes type = PieceTypes.NONE;
 
         PlayerColor[] colors = {PlayerColor.WHITE, PlayerColor.BLACK};
@@ -113,6 +121,7 @@ public class CustomGameBuilder {
 
 
     }
+    //Both adds the piece to the "logic" chessboard and displays the immediate change on the clicked JButton
     private void createPiece(Coordinates coordinates, PieceTypes type, PlayerColor color) {
         int x = coordinates.getX();
         int y = coordinates.getY();
@@ -183,7 +192,7 @@ public class CustomGameBuilder {
         int botPlayChoice =
                 JOptionPane.showConfirmDialog(
                         null,
-                        "Do you want to finish placing pieces?",
+                        "Do you want to finish placing pieces and begin the game?",
                         "Finish placing dialog",
                         JOptionPane.YES_NO_OPTION);
         if (botPlayChoice == JOptionPane.YES_OPTION) {

@@ -1,18 +1,18 @@
 package cz.cvut.fel.pjv;
 
 import cz.cvut.fel.pjv.pieces.*;
-//A data class that keeps all necessary info to start a game from a certain board state
+/**
+ * A class that represents what is happenign on the chessboard currently, and in general holds most of the data
+ * A constructor and the getters and setters
+ */
 public class BoardState {
+    private final Piece[][] board = new Piece[8][8];
     private boolean canWhiteCastle;
     private boolean canBlackCastle;
-
     private int whiteTime;
     private int blackTime;
-
     private Coordinates enPassantCoordinates;
     private PlayerColor currentTurn;
-
-    private final Piece[][] board = new Piece[8][8];
     private PlayerColor botPlayerColor;
 
     private Coordinates whiteKingPosition;
@@ -143,12 +143,12 @@ public class BoardState {
         this.blackKingPosition = blackKingPosition;
     }
 
-    public void setBotPlayerColor(PlayerColor botPlayerColor) {
-        this.botPlayerColor = botPlayerColor;
-    }
-
     public PlayerColor getBotPlayerColor() {
         return botPlayerColor;
+    }
+
+    public void setBotPlayerColor(PlayerColor botPlayerColor) {
+        this.botPlayerColor = botPlayerColor;
     }
 }
 

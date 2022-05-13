@@ -2,15 +2,18 @@ package cz.cvut.fel.pjv;
 
 import cz.cvut.fel.pjv.view.View;
 
-// The controller part of the MVC model
+/**
+ * The controller part of the MVC model
+ * The Overhead class which calls on all of the other classes
+ * Ensures communication between classes
+ */
 public class Controller {
+  private final View view;
   private BoardState board;
   private Timer timer;
-  private final View view;
   private GameRules gameRules = null;
   private PGNHistory pgnHistory;
   private FileSaver fileSaver;
-
 
   public Controller() {
     view = new View(this);
@@ -25,7 +28,6 @@ public class Controller {
     pgnHistory = new PGNHistory();
     gameRules = new GameRules(board, view.getBoardWindow(), this, pgnHistory);
     fileSaver = new FileSaver(pgnHistory);
-
   }
 
   public boolean firstClick(Coordinates coordinates) {
@@ -36,15 +38,18 @@ public class Controller {
   }
 
   public void secondClick(Coordinates coordinates) {
-   gameRules.secondClick(coordinates);
+    gameRules.secondClick(coordinates);
   }
+
   public void changeTurn() {
     timer.changeTurn();
   }
+
   public void gameEnd(PlayerColor color) {
     view.getBoardWindow().gameEnd(true, color);
   }
+
   public void saveGame() {
-      fileSaver.savePGN();
+    fileSaver.savePGN();
   }
 }

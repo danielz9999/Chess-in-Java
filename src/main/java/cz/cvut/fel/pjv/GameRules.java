@@ -5,29 +5,31 @@ import cz.cvut.fel.pjv.view.BoardWindow;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-
 // The class ensuring the correct application of chess rules
 public class GameRules {
   private final PieceMoveGenerator pieceMoveGenerator;
   private final BoardState board;
   private final BoardWindow boardWindow;
   private final PieceMover pieceMover;
-  private ArrayList<Coordinates> moves;
-  private Coordinates startCoordinates;
   private final CheckMoveControl checkMoveControl;
   private final CheckmateChecker checkmateChecker;
-
+  private final Controller controller;
+  private final BotPlayer botPlayer;
+  private final Logger log = Logger.getLogger(GameRules.class.getName());
+  private ArrayList<Coordinates> moves;
+  private Coordinates startCoordinates;
   private ArrayList<Coordinates> whitePositions;
   private ArrayList<Coordinates> blackPositions;
 
-  private final Controller controller;
-  private final BotPlayer botPlayer;
+  /**
+   * The Model part of the MVC model
+   * Maintains the rules of chess by keeping track of the logical parts
+   * Decides what happens on button clicks, changes turns, allows for bot player turns, requests for graphical changes from View
+   *
+   */
 
-  private final Logger log = Logger.getLogger(GameRules.class.getName());
-
-
-
-  public GameRules(BoardState board, BoardWindow boardWindow, Controller controller, PGNHistory pgnHistory) {
+  public GameRules(
+      BoardState board, BoardWindow boardWindow, Controller controller, PGNHistory pgnHistory) {
     this.board = board;
     this.boardWindow = boardWindow;
     refreshPiecePositions();
@@ -36,14 +38,13 @@ public class GameRules {
     checkMoveControl = new CheckMoveControl(board, whitePositions, blackPositions);
     checkmateChecker = new CheckmateChecker(checkMoveControl);
     this.controller = controller;
-    log.info("Creating bot player with color: "+ board.getBotPlayerColor());
+    log.info("Creating bot player with color: " + board.getBotPlayerColor());
     botPlayer = new RandomBotPlayer(board.getBotPlayerColor());
 
-
-    if (botPlayer.getColor() != PlayerColor.NONE && botPlayer.getColor() == board.getCurrentTurn()) {
+    if (botPlayer.getColor() != PlayerColor.NONE
+        && botPlayer.getColor() == board.getCurrentTurn()) {
       botPlayerMove();
     }
-
   }
 
   public boolean firstClick(Coordinates coordinates) {
@@ -63,6 +64,7 @@ public class GameRules {
       return true;
     }
   }
+
   public void secondClick(Coordinates coordinates) {
     for (Coordinates move : moves) {
       boardWindow.dehighlightButton(move);
@@ -72,10 +74,10 @@ public class GameRules {
       pieceMover.movePiece(board, startCoordinates, coordinates);
       refreshPiecePositions();
 
-
       controller.changeTurn();
       if (checkmateChecker.checkForMate(board, whitePositions, blackPositions)) {
-        boardWindow.gameEnd(checkmateChecker.checkForCheckmate(), board.getCurrentTurn().getOpposite());
+        boardWindow.gameEnd(
+            checkmateChecker.checkForCheckmate(), board.getCurrentTurn().getOpposite());
       }
 
       if (botPlayer.getColor() != PlayerColor.NONE) {
@@ -86,7 +88,7 @@ public class GameRules {
     startCoordinates = null;
     moves = null;
   }
-
+  //Resets black and white positions based on the current board
   private void refreshPiecePositions() {
     whitePositions = new ArrayList<>();
     blackPositions = new ArrayList<>();
@@ -104,7 +106,9 @@ public class GameRules {
       this.checkMoveControl.setPiecePositions(whitePositions, blackPositions);
     }
   }
-
+  //A bot picks a pieces and then tries to make a play with it
+  //If the move was illegitimate (no moves, check) tries again and again until a move is made
+  //If no moves were possible a (check)mate would occur
   private void botPlayerMove() {
     ArrayList<Coordinates> positions;
     if (botPlayer.getColor() == PlayerColor.WHITE) {
@@ -132,8 +136,15 @@ public class GameRules {
     }
     Coordinates pickedMove = botPlayer.pickMove(possibleMoves);
     pieceMover.movePiece(board, pickedPiece, pickedMove);
-    log.info("Bot move made, from " + pickedPiece.getX() + " " + pickedPiece.getY() +
-                  " TO " + pickedMove.getX() + " " + pickedMove.getY());
+    log.info(
+        "Bot move made, from "
+            + pickedPiece.getX()
+            + " "
+            + pickedPiece.getY()
+            + " TO "
+            + pickedMove.getX()
+            + " "
+            + pickedMove.getY());
     refreshPiecePositions();
     controller.changeTurn();
     if (checkmateChecker.checkForMate(board, whitePositions, blackPositions)) {

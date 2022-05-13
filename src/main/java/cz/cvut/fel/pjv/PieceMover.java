@@ -3,14 +3,17 @@ package cz.cvut.fel.pjv;
 import cz.cvut.fel.pjv.view.BoardWindow;
 
 import java.util.logging.Logger;
-
+/**
+ * A class which moves pieces across the board
+ * does not control for accuracy, only puts the pieces where the destination is and updates buttons
+ * Updates both the logic boards and the visual JButtons
+ */
 public class PieceMover {
+  private static final String castling = "castling";
   private final BoardWindow boardWindow;
   private final PGNHistory pgnHistory;
   private final PieceMoveGenerator pieceMoveGenerator;
-  private final static String castling = "castling";
   private final Logger log = Logger.getLogger(PieceMover.class.getName());
-
 
   public PieceMover(BoardWindow boardWindow, PGNHistory pgnHistory) {
     this.boardWindow = boardWindow;
@@ -54,7 +57,7 @@ public class PieceMover {
       enPassant(board, end, color);
     }
     if (type == PieceTypes.KING) {
-      if (color == PlayerColor.WHITE){
+      if (color == PlayerColor.WHITE) {
         board.setWhiteKingPosition(end);
       } else {
         board.setBlackKingPosition(end);
@@ -169,16 +172,19 @@ public class PieceMover {
       board.setPiece(end, chosenPiece, PlayerColor.BLACK);
     }
   }
-  private boolean doesNotationOverlap(BoardState board, Coordinates end, Coordinates start, PieceTypes type, PlayerColor color) {
+
+  private boolean doesNotationOverlap(
+      BoardState board, Coordinates end, Coordinates start, PieceTypes type, PlayerColor color) {
     for (int i = 0; i < 8; i++) {
       for (int j = 0; j < 8; j++) {
-          if (board.getBoard()[i][j].getColor() == color) {
-            Coordinates position = new Coordinates(i, j);
-            if (board.getBoard()[i][j].getType() == type && !position.equals(start)
-                    && pieceMoveGenerator.generateMoves(board, position).contains(end)) {
-              return true;
-            }
+        if (board.getBoard()[i][j].getColor() == color) {
+          Coordinates position = new Coordinates(i, j);
+          if (board.getBoard()[i][j].getType() == type
+              && !position.equals(start)
+              && pieceMoveGenerator.generateMoves(board, position).contains(end)) {
+            return true;
           }
+        }
       }
     }
     return false;

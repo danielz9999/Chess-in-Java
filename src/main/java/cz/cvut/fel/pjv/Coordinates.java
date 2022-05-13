@@ -2,8 +2,10 @@ package cz.cvut.fel.pjv;
 
 import java.util.Objects;
 
-// The Coordinates class equivalent to Pair<Integer, Integer>
-// Created to improve readability, clarity
+/**
+ * A class that holds two integers, meant to represent positions on the chessboard
+ * The Java class Pair should work similarly, but it was not exactly what I was looking for, so I made my own
+ */
 public class Coordinates {
   private final Integer x;
   private final Integer y;

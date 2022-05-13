@@ -1,7 +1,11 @@
 package cz.cvut.fel.pjv;
 
-import java.util.ArrayList;
 
+import java.util.List;
+/**
+ * Abstract class that all bot players (makers of PC moves) share
+ * Useful if in the future more bot players
+ */
 public abstract class BotPlayer {
   private PlayerColor color;
 
@@ -9,9 +13,9 @@ public abstract class BotPlayer {
     color = pieceColor;
   }
 
-  public abstract Coordinates pickPiece(ArrayList<Coordinates> options);
+  public abstract Coordinates pickPiece(List<Coordinates> options);
 
-  public abstract Coordinates pickMove(ArrayList<Coordinates> options);
+  public abstract Coordinates pickMove(List<Coordinates> options);
 
   public PlayerColor getColor() {
     return color;

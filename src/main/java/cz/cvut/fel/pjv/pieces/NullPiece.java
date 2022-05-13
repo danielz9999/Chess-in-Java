@@ -2,8 +2,10 @@ package cz.cvut.fel.pjv.pieces;
 
 import cz.cvut.fel.pjv.PieceTypes;
 import cz.cvut.fel.pjv.PlayerColor;
-
-// A piece representing an empty space on a board
+/**
+ * A class representing the empty space on the board, takes no parameters
+ * holds a NONE PlayerColor and PieceType
+ */
 public class NullPiece extends Piece {
 
   public NullPiece() {

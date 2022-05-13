@@ -6,12 +6,15 @@ import cz.cvut.fel.pjv.pieces.Piece;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-
-//A class that implements a windows in which the chess board is
+/**
+ * A GUI class that represents the main playing board, what the user interacts with the most
+ * Consists of an 8x8 grid of JButtons
+ * Main functions are the actionListeners of the buttons, which notify other classes about user interaction and visualising the buttons
+ */
 public class BoardWindow {
   private final JButton[][] board = new JButton[8][8];
-    private JFrame frame;
     private final Controller controller;
+    private JFrame frame;
     private boolean isFirstClick = true;
 
 

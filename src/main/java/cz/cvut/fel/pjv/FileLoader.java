@@ -5,13 +5,16 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
-
+/**
+ * A class capable of loading a game from a PGN file
+ * Reads the opened file character by character and based on that makes the decoded moves on a standard chessboard
+ */
 public class FileLoader {
   private final Logger log = Logger.getLogger(FileLoader.class.getName());
   private final PieceMover pieceMover = new PieceMover(null, null);
   private final PieceMoveGenerator pieceMoveGenerator = new PieceMoveGenerator();
   private final ArrayList<Character> pieces = new ArrayList<>();
-  private final char[] piecesArray = {'K','Q','R','B','N'};
+  private final char[] piecesArray = {'K', 'Q', 'R', 'B', 'N'};
   private final char[] rowsArray = {'8', '7', '6', '5', '4', '3', '2', '1'};
   private final char[] columnsArray = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
   private final char[] numbersArray = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
@@ -43,7 +46,7 @@ public class FileLoader {
   private void parsePGN(BufferedReader reader, BoardState boardState) {
     log.info("Entered parsing of PGN format");
     int currChar;
-    int prevChar = Integer.parseInt(" ");
+    int prevChar = 32;
     int currIndex;
     PieceTypes currType = PieceTypes.PAWN;
     int coorX = 0;
@@ -80,11 +83,10 @@ public class FileLoader {
           prevChar = currChar;
           continue;
         }
-        if ((currIndex = isIn(rowsArray, currChar)) != -1
-            && (isIn(columnsArray, prevChar)) != -1) {
+        if ((currIndex = isIn(rowsArray, currChar)) != -1 && (isIn(columnsArray, prevChar)) != -1) {
           coorX = currIndex;
           prevChar = currChar;
-          log.info("Finding move for: "+ currType + " at " + coorX + " " + coorY);
+          log.info("Finding move for: " + currType + " at " + coorX + " " + coorY);
           findMove(coorX, coorY, boardState, currType);
           currType = PieceTypes.PAWN;
           continue;
@@ -92,7 +94,6 @@ public class FileLoader {
         if (currChar == 'O') {
           oCounter++;
           prevChar = currChar;
-
         }
       }
     } catch (IOException e) {
@@ -105,8 +106,10 @@ public class FileLoader {
       for (int j = 0; j < 8; j++) {
         if (board.getBoard()[i][j].getColor() == board.getCurrentTurn()
             && board.getBoard()[i][j].getType() == type) {
-           ArrayList<Coordinates> moveList = (ArrayList<Coordinates>) pieceMoveGenerator.generateMoves(board, new Coordinates(i, j));
-          if (moveList.contains(new Coordinates(endX,endY))) {
+          ArrayList<Coordinates> moveList =
+              (ArrayList<Coordinates>)
+                  pieceMoveGenerator.generateMoves(board, new Coordinates(i, j));
+          if (moveList.contains(new Coordinates(endX, endY))) {
             pieceMover.movePiece(board, new Coordinates(i, j), new Coordinates(endX, endY));
             log.info("Moving piece " + type + " from " + i + " " + j + " to " + endX + " " + endY);
           } else {
@@ -143,5 +146,4 @@ public class FileLoader {
     }
     return -1;
   }
-
 }

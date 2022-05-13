@@ -13,20 +13,25 @@ import java.util.logging.Logger;
 
 import static cz.cvut.fel.pjv.PlayerColor.*;
 
-
-// Class implementing the gui menu that shows up when launching the application
+/**
+ * A GUI class representing the main menu the launches at the start of the application
+ * Here the user can choose on the specifics of the game, timer, whether to play VS the PC or not,
+ * Whether to customise the board before starting or whether to load a saved game from a PGN file
+ * Consists mainly of Java Swing elements
+ * Takes @param Controller so it then signal to start the game
+ */
 public class MainMenu {
+  private final FileLoader loader = new FileLoader();
+  private final JFrame frame;
+  private final Logger log = Logger.getLogger(MainMenu.class.getName());
   Controller controller;
   private int whiteTime = -1;
   private int blackTime = -1;
   private BoardState boardState;
-  private final FileLoader loader = new FileLoader();
-  private final JFrame frame;
   private JFrame submenuFrame;
   private PlayerColor botColor = NONE;
   private CustomGameBuilder customGameBuilder;
-  private final Logger log = Logger.getLogger(MainMenu.class.getName());
-
+ //A simple choice between playing and exiting
   public MainMenu(Controller controller) {
     this.controller = controller;
 
@@ -42,8 +47,7 @@ public class MainMenu {
     play.setAlignmentX(Component.CENTER_ALIGNMENT);
 
     play.setText("Play");
-    play.addActionListener(
-        e -> submenu());
+    play.addActionListener(e -> submenu());
 
     exit.setText("Exit");
     exit.addActionListener(
@@ -59,6 +63,7 @@ public class MainMenu {
     frame.setVisible(true);
   }
 
+  //Here the player sets the time
   private void timerQuestion() {
     int result =
         JOptionPane.showConfirmDialog(
@@ -70,7 +75,8 @@ public class MainMenu {
       whiteTime =
           Integer.parseInt(
               JOptionPane.showInputDialog(
-                  null, "Please enter time (in seconds) for player with white pieces (max. 3559):"));
+                  null,
+                  "Please enter time (in seconds) for player with white pieces (max. 3559):"));
       if (whiteTime > 3559) {
 
         whiteTime = 3599;
@@ -78,16 +84,18 @@ public class MainMenu {
       blackTime =
           Integer.parseInt(
               JOptionPane.showInputDialog(
-                  null, "Please enter time (in seconds) for player with black pieces (max. 3559):"));
+                  null,
+                  "Please enter time (in seconds) for player with black pieces (max. 3559):"));
       if (blackTime > 3559) {
 
         blackTime = 3599;
       }
     }
   }
-
+  //The user chooses from where to load the game
   private String filePathQuestion() {
-    JOptionPane.showMessageDialog(null, "Please load from a .pgn or .txt format", "Format notice", JOptionPane.PLAIN_MESSAGE);
+    JOptionPane.showMessageDialog(
+        null, "Please load from a .pgn or .txt format", "Format notice", JOptionPane.PLAIN_MESSAGE);
 
     JFileChooser fileChooser = new JFileChooser();
     File workingDirectory = new File(System.getProperty("user.dir"));
@@ -99,7 +107,7 @@ public class MainMenu {
     }
     return fileChooser.getSelectedFile().getAbsolutePath();
   }
-
+  //Choosing between different types of play, standard, custom and loaded from a file
   private void submenu() {
     frame.setVisible(false);
     submenuFrame = new JFrame("Play options");
@@ -108,7 +116,9 @@ public class MainMenu {
     JButton customGame = new JButton();
     submenuFrame.setSize(250, 240);
     submenuFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-    submenuFrame.getContentPane().setLayout(new BoxLayout(submenuFrame.getContentPane(), BoxLayout.Y_AXIS));
+    submenuFrame
+        .getContentPane()
+        .setLayout(new BoxLayout(submenuFrame.getContentPane(), BoxLayout.Y_AXIS));
 
     newGame.setText("New Game");
     newGame.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -135,7 +145,6 @@ public class MainMenu {
           boardState.setBotPlayerColor(botColor);
           log.info("Starting normal game with bot color: " + boardState.getBotPlayerColor());
           controller.startGame(boardState);
-
         });
     load.addActionListener(
         e1 -> {
@@ -143,27 +152,30 @@ public class MainMenu {
           boardState = loader.loadFile(fileName);
           controller.startGame(boardState);
         });
-    customGame.addActionListener(e1 -> {playVsComputerQuestion();
-                                        timerQuestion();
-                                        customGameBuilder = new CustomGameBuilder(this,whiteTime,blackTime);
-                                        customGameBuilder.customGameInit();
-                                        submenuFrame.setVisible(false);
-
-    });
+    customGame.addActionListener(
+        e1 -> {
+          playVsComputerQuestion();
+          timerQuestion();
+          customGameBuilder = new CustomGameBuilder(this, whiteTime, blackTime);
+          customGameBuilder.customGameInit();
+          submenuFrame.setVisible(false);
+        });
     submenuFrame.setLocationRelativeTo(null);
     submenuFrame.setVisible(true);
   }
-
+  //Two dialogs deciding if the opponent will be a bot, and if so which side will they play
   private void playVsComputerQuestion() {
     int botPlayChoice =
-            JOptionPane.showConfirmDialog(
-                    frame,
-                    "Would you like to play VS a computer?",
-                    "Computer opponent choice",
-                    JOptionPane.YES_NO_OPTION);
+        JOptionPane.showConfirmDialog(
+            frame,
+            "Would you like to play VS a computer?",
+            "Computer opponent choice",
+            JOptionPane.YES_NO_OPTION);
     if (botPlayChoice == JOptionPane.YES_OPTION) {
-        Object[] colors = {WHITE, BLACK};
-      int playerColorChoice = JOptionPane.showOptionDialog(frame,
+      Object[] colors = {WHITE, BLACK};
+      int playerColorChoice =
+          JOptionPane.showOptionDialog(
+              frame,
               "Which side (color) do you want to play?",
               "Player color choice",
               JOptionPane.YES_NO_OPTION,
@@ -177,10 +189,10 @@ public class MainMenu {
       } else {
         botColor = WHITE;
         log.info("Bot player color chose: WHITE");
-
       }
     }
   }
+  //the Custom Game option of the submenu returns here after finishing its setup
   public void customGameFinishSetup(BoardState customBoard) {
     log.info("Starting custom game, botcolor: " + botColor);
     customBoard.setBotPlayerColor(botColor);

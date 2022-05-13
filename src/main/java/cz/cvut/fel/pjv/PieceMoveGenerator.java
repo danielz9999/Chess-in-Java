@@ -2,7 +2,11 @@ package cz.cvut.fel.pjv;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * A class that when given @param board and @param coordinates returns all the possible moves that class can make
+ * Takes in consideration friendly blocking, en passant, castling etc.
+ * The only thing it does not account for is Check
+ */
 public class PieceMoveGenerator {
 
     public List<Coordinates> generateMoves(BoardState board, Coordinates coordinates) {

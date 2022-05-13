@@ -2,14 +2,17 @@ package cz.cvut.fel.pjv;
 
 import java.util.ArrayList;
 import java.util.logging.Logger;
-
+/**
+ * After a move is made, adds the appropriate notation to its notes ArrayList
+ *
+ */
 public class PGNHistory {
     private final char[] rows = {'8','7','6','5','4','3','2','1'};
     private final char[] columns = {'a','b','c','d','e','f','g','h'};
     private final ArrayList<String> notes;
+    private final Logger log = Logger.getLogger(PGNHistory.class.getName());
     private int noteCounter;
     private int turnCounter;
-    private final Logger log = Logger.getLogger(PGNHistory.class.getName());
 
     public PGNHistory() {
         notes = new ArrayList<>();

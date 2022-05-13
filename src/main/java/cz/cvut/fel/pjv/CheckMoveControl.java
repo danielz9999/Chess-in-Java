@@ -1,6 +1,5 @@
 package cz.cvut.fel.pjv;
 
-
 import java.util.ArrayList;
 
 /**
@@ -35,7 +34,8 @@ public class CheckMoveControl {
   }
 
   private boolean checkControl(Coordinates move, Coordinates startCoords) {
-      BoardState movedBoard = new BoardState(board.isCanWhiteCastle(), board.isCanBlackCastle(), -1,-1, false);
+    BoardState movedBoard =
+        new BoardState(board.isCanWhiteCastle(), board.isCanBlackCastle(), -1, -1, false);
 
     for (int i = 0; i < 8; i++) {
       movedBoard.getBoard()[i] = board.getBoard()[i].clone();
@@ -67,10 +67,10 @@ public class CheckMoveControl {
 
   private boolean isBlackInCheck(BoardState movedBoard) {
     ArrayList<Coordinates> threatenedPositions;
-  movedBoard.setCurrentTurn(PlayerColor.WHITE);
+    movedBoard.setCurrentTurn(PlayerColor.WHITE);
     for (Coordinates position : whitePositions) {
       threatenedPositions =
-              (ArrayList<Coordinates>) pieceMoveGenerator.generateMoves(movedBoard, position);
+          (ArrayList<Coordinates>) pieceMoveGenerator.generateMoves(movedBoard, position);
 
       for (Coordinates whiteMove : threatenedPositions) {
         if (whiteMove.equals(movedBoard.getBlackKingPosition())) {
@@ -80,7 +80,9 @@ public class CheckMoveControl {
     }
     return true;
   }
-  public void setPiecePositions(ArrayList<Coordinates> whitePositions, ArrayList<Coordinates> blackPositions) {
+
+  public void setPiecePositions(
+      ArrayList<Coordinates> whitePositions, ArrayList<Coordinates> blackPositions) {
     this.whitePositions = whitePositions;
     this.blackPositions = blackPositions;
   }
