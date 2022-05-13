@@ -52,4 +52,8 @@ public class Controller {
   public void saveGame() {
     fileSaver.savePGN();
   }
+
+  public void  botTurnCost(int cost) {
+      timer.decrementTimer(cost);
+  }
 }

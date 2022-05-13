@@ -133,6 +133,8 @@ public class GameRules {
       }
       possibleMoves = checkMoveControl.filterMoves(generatedMoves, pickedPiece);
     }
+
+
     Coordinates pickedMove = botPlayer.pickMove(possibleMoves);
     pieceMover.movePiece(board, pickedPiece, pickedMove);
     log.info(
@@ -145,6 +147,7 @@ public class GameRules {
             + " "
             + pickedMove.getY());
     refreshPiecePositions();
+    controller.botTurnCost(10);
     controller.changeTurn();
     if (checkmateChecker.checkForMate(board, whitePositions, blackPositions)) {
       boardWindow.gameEnd(

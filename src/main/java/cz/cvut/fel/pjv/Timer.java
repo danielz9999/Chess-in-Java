@@ -12,8 +12,8 @@ import static cz.cvut.fel.pjv.PlayerColor.WHITE;
  */
 public class Timer extends Thread {
   private final Controller controller;
-  private long timeW;
-  private long timeB;
+  private volatile long timeW;
+  private volatile long timeB;
   private TimerWindow timerWindow = null;
   private PlayerColor turn = WHITE;
   private long startTime;
@@ -69,5 +69,25 @@ public class Timer extends Thread {
 
   public void gameEnd(PlayerColor color) {
     controller.gameEnd(color);
+  }
+
+  public void decrementTimer(int amount) {
+    if (turn == WHITE) {
+      timeW = timeW - amount * 1000L;
+      int whiteSec = (int) (timeW / 1000);
+      int whiteMins = whiteSec / 60;
+      whiteSec = whiteSec - whiteMins * 60;
+
+        timerWindow.updateWhiteTime(whiteMins, whiteSec);
+
+    } else {
+      timeB = timeB - amount * 1000L;
+      int blackSec = (int) (timeB / 1000);
+      int blackMins = blackSec / 60;
+      blackSec = blackSec - blackMins * 60;
+
+        timerWindow.updateBlackTime(blackMins, blackSec);
+
+    }
   }
 }
