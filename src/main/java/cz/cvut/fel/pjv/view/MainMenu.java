@@ -65,27 +65,45 @@ public class MainMenu {
 
   //Here the player sets the time
   private void timerQuestion() {
+
     int result =
         JOptionPane.showConfirmDialog(
             frame,
             "Would you like to play with a timer?",
             "Timer option choice",
             JOptionPane.YES_NO_OPTION);
+
     if (result == JOptionPane.YES_NO_OPTION) {
+      try {
       whiteTime =
           Integer.parseInt(
               JOptionPane.showInputDialog(
                   null,
                   "Please enter time (in seconds) for player with white pieces (max. 3559):"));
+      } catch (NumberFormatException e) {
+        log.severe("Did not detect a number on user input");
+        JOptionPane.showMessageDialog(
+            null, "Please input a number", "Number format error", JOptionPane.ERROR_MESSAGE);
+        timerQuestion();
+        return;
+      }
       if (whiteTime > 3559) {
 
         whiteTime = 3599;
       }
+      try {
       blackTime =
           Integer.parseInt(
               JOptionPane.showInputDialog(
                   null,
                   "Please enter time (in seconds) for player with black pieces (max. 3559):"));
+      } catch (NumberFormatException e) {
+        log.severe("Did not detect a number on user input");
+        JOptionPane.showMessageDialog(
+            null, "Please input a number", "Number format error", JOptionPane.ERROR_MESSAGE);
+        timerQuestion();
+        return;
+      }
       if (blackTime > 3559) {
 
         blackTime = 3599;
